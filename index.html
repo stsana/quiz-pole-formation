@@ -93,6 +93,15 @@
         ];
 
         // 2. COMPOSANT PRINCIPAL (APPLICATION)
+        // Fonction pour mélanger un tableau aléatoirement (Fisher-Yates)
+            const shuffleArray = (array) => {
+                const newArray = [...array];
+                for (let i = newArray.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                }
+                return newArray;
+            };
         function App() {
             const [gameState, setGameState] = React.useState('home'); // home, theme, quiz, score
             const [questions, setQuestions] = React.useState([]);
@@ -100,24 +109,29 @@
             const [score, setScore] = React.useState(0);
             const [selectedAnswer, setSelectedAnswer] = React.useState(null);
 
-            const startQuiz = (themeId) => {
-                let selectedQuestions = [];
-                if (themeId === 'mix') {
-                    selectedQuestions = [
-                        ...quizData.doctrine,
-                        ...quizData.ecritures,
-                        ...quizData.pratique,
-                        ...quizData.apologetique
-                    ].sort(() => 0.5 - Math.random()).slice(0, 5);
-                } else {
-                    selectedQuestions = [...quizData[themeId]].sort(() => 0.5 - Math.random());
-                }
-                setQuestions(selectedQuestions);
-                setCurrentQIndex(0);
-                setScore(0);
-                setSelectedAnswer(null);
-                setGameState('quiz');
-            };
+           const startQuiz = (themeId) => {
+    let selectedQuestions = [];
+    
+    if (themeId === 'mix') {
+        // Regroupe toutes les questions et les mélange
+        const allQuestions = [
+            ...quizData.doctrine,
+            ...quizData.ecritures,
+            ...quizData.pratique,
+            ...quizData.apologetique
+        ];
+        selectedQuestions = shuffleArray(allQuestions).slice(0, 5); // Garde 5 questions au hasard
+    } else {
+        // Mélange uniquement les questions du thème choisi
+        selectedQuestions = shuffleArray(quizData[themeId]);
+    }
+    
+    setQuestions(selectedQuestions);
+    setCurrentQIndex(0);
+    setScore(0);
+    setSelectedAnswer(null);
+    setGameState('quiz');
+};
 
             const handleAnswer = (index) => {
                 if (selectedAnswer !== null) return; 
