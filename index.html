@@ -7,7 +7,7 @@
     <!-- Chargement de React et ReactDOM via CDN -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Chargement de Babel pour compiler le JSX dans le navigateur -->
+    <!-- Chargement de Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Chargement de Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,62 +24,302 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // 1. BASE DE DONNÉES DES QUESTIONS
+        // 1. BASE DE DONNÉES DES QUESTIONS SOURCÉES (Catéchisme de l'Église Catholique)
         const quizData = {
             doctrine: [
                 {
-                    question: "Combien y a-t-il de sacrements dans l'Église catholique ?",
-                    options: ["5", "7", "10", "12"],
+                    question: "Selon le quatrième Concile du Latran, comment sont définies les Personnes de la Sainte Trinité ?",
+                    options: ["Trois Dieux distincts", "Trois Personnes, mais une Essence ou Substance absolument simple", "Une seule Personne sous trois formes", "Trois émanations divines successives"],
                     correctIndex: 1,
-                    explication: "Les 7 sacrements sont le Baptême, l'Eucharistie, la Confirmation, la Pénitence, l'Onction des malades, l'Ordre et le Mariage."
+                    explication: "L'Église confesse un seul vrai Dieu: Trois Personnes, mais une Essence, Substance ou Nature absolument simple."
                 },
                 {
-                    question: "Que célèbre-t-on à la Pentecôte ?",
-                    options: ["La naissance de Jésus", "La résurrection", "La descente du Saint-Esprit", "L'ascension"],
+                    question: "Comment le Concile de Chalcédoine (451) décrit-il les deux natures du Christ ?",
+                    options: ["Mélangées pour former une nature divine", "Séparées après sa mort", "Sans confusion, sans changement, sans division, sans séparation", "Une nature humaine absorbée par la divine"],
                     correctIndex: 2,
-                    explication: "La Pentecôte marque la venue de l'Esprit Saint sur les apôtres, 50 jours après Pâques."
+                    explication: "Le Christ doit être reconnu en deux natures, sans confusion, sans changement, sans division, sans séparation, réunies en une seule personne."
+                },
+                {
+                    question: "Selon l'enseignement de l'Église, qu'est-ce que le péché originel tel qu'il est transmis ?",
+                    options: ["Un péché personnel commis par chaque individu", "Un état contracté, défini comme la privation de la sainteté originelle", "Une corruption totale et irrémédiable de l'âme", "Une simple imitation du mauvais exemple d'Adam"],
+                    correctIndex: 1,
+                    explication: "Le péché originel est un péché 'contracté' et non pas 'commis', un état de privation de la sainteté et de la justice originelles."
+                },
+                {
+                    question: "Qu'affirme le dogme de l'Immaculée Conception proclamé par le pape Pie IX ?",
+                    options: ["La naissance virginale de Jésus", "La préservation de Marie de toute souillure du péché originel dès sa conception", "L'ascension corporelle de Marie au ciel", "La perfection morale des apôtres"],
+                    correctIndex: 1,
+                    explication: "Marie a été, au premier instant de sa conception, préservée intacte de toute souillure du péché originel par une grâce singulière."
+                },
+                {
+                    question: "Que signifie le titre divin 'Seigneur' (Kyrios) attribué à Jésus dans le Nouveau Testament ?",
+                    options: ["Un simple titre de courtoisie", "La reconnaissance d'un messager angélique", "La souveraineté divine, affirmant qu'il est Dieu lui-même", "Une suprématie uniquement politique"],
+                    correctIndex: 2,
+                    explication: "Dans le Nouveau Testament, le titre 'Seigneur' désigne la divinité même du Dieu d'Israël, et Jésus est reconnu ainsi comme Dieu lui-même."
+                },
+                {
+                    question: "Comment l'Église comprend-elle le terme 'anges' à la suite de Saint Augustin ?",
+                    options: ["Ange désigne la nature, esprit désigne la fonction", "Ange désigne la fonction, esprit désigne la nature", "Ce sont des âmes humaines glorifiées", "Des émanations impersonnelles de l'univers"],
+                    correctIndex: 1,
+                    explication: "Saint Augustin affirme : 'Ange désigne la fonction, non pas la nature. D'après ce qu'il est, c'est un esprit, d'après ce qu'il fait, c'est un ange'."
+                },
+                {
+                    question: "Que signifie l'affirmation du Concile de Vienne selon laquelle 'l'âme est la forme du corps' ?",
+                    options: ["L'âme donne au corps sa silhouette", "L'âme est prisonnière du corps matériel", "Grâce à l'âme spirituelle, la matière devient un corps humain et vivant", "L'âme et le corps sont deux natures totalement séparées"],
+                    correctIndex: 2,
+                    explication: "L'unité est si profonde que c'est grâce à l'âme spirituelle que le corps constitué de matière est un corps humain et vivant formant une unique nature."
+                },
+                {
+                    question: "Quel fut le but premier de la descente de Jésus aux enfers après sa mort ?",
+                    options: ["Détruire l'enfer de la damnation", "Y délivrer les damnés", "Libérer les justes qui l'avaient précédé", "Être jugé par les morts"],
+                    correctIndex: 2,
+                    explication: "Jésus n'est pas descendu pour délivrer les damnés ni pour détruire l'enfer, mais pour libérer les justes qui l'avaient précédé dans le séjour des morts."
+                },
+                {
+                    question: "Quel concile œcuménique a confessé pour la première fois que le Fils de Dieu est 'consubstantiel' au Père ?",
+                    options: ["Le Concile de Trente (1546)", "Le premier Concile de Nicée (325)", "Le Concile de Chalcédoine (451)", "Le deuxième Concile du Vatican (1965)"],
+                    correctIndex: 1,
+                    explication: "Le premier Concile œcuménique de Nicée, en 325, confessa que le Fils est de la même substance (consubstantiel) que le Père."
+                },
+                {
+                    question: "Selon le premier Concile du Vatican, pourquoi Dieu a-t-il créé le monde ?",
+                    options: ["Pour augmenter sa propre béatitude", "Par nécessité pour ne pas être solitaire", "Pour manifester et communiquer sa gloire par amour", "Par un processus de hasard cosmique"],
+                    correctIndex: 2,
+                    explication: "Dieu n'a pas d'autre raison pour créer que son amour et sa bonté ; le monde a été créé pour manifester et communiquer la gloire de Dieu."
+                },
+                {
+                    question: "Que s'est-il passé pour la Personne divine du Christ lors de son séjour au tombeau ?",
+                    options: ["Elle est retournée au ciel sans le corps", "Elle s'est séparée de l'âme et du corps", "Elle est restée unie à son âme et à son corps, bien qu'ils soient séparés par la mort", "Elle a fusionné avec la matière du tombeau"],
+                    correctIndex: 2,
+                    explication: "La Personne unique du Verbe a continué à assumer le corps et l'âme du Christ qui, quoique séparés l'un de l'autre par la mort, sont restés unis au Verbe."
+                },
+                {
+                    question: "Que manifeste la conception virginale de Jésus concernant son origine ?",
+                    options: ["Que l'Esprit Saint a remplacé l'âme humaine", "L'initiative absolue de Dieu dans l'Incarnation, Jésus n'ayant que Dieu comme Père", "Une simple métaphore de pureté", "Qu'il n'avait pas un corps réel"],
+                    correctIndex: 1,
+                    explication: "La virginité de Marie manifeste l'initiative absolue de Dieu : Jésus n'a que Dieu comme Père et la nature humaine prise ne l'a jamais éloigné du Père."
                 }
             ],
             ecritures: [
                 {
-                    question: "Quel est le premier livre de la Bible ?",
-                    options: ["L'Exode", "La Genèse", "Le Lévitique", "Les Psaumes"],
+                    question: "Combien de livres composent le Canon des Écritures (Ancien et Nouveau Testament) reconnu par l'Église catholique ?",
+                    options: ["39 pour l'Ancien et 27 pour le Nouveau", "46 pour l'Ancien et 27 pour le Nouveau", "50 pour l'Ancien et 21 pour le Nouveau", "24 pour l'Ancien et 27 pour le Nouveau"],
                     correctIndex: 1,
-                    explication: "La Genèse raconte la création du monde et les origines de l'humanité."
+                    explication: "L'Église reçoit et vénère comme inspirés la liste intégrale appelée 'Canon', comprenant 46 livres pour l'Ancien Testament et 27 pour le Nouveau."
                 },
                 {
-                    question: "Qui a écrit la majorité des Épîtres du Nouveau Testament ?",
-                    options: ["Saint Pierre", "Saint Jean", "Saint Paul", "Saint Luc"],
+                    question: "Dans les critères d'interprétation, qu'appelle-t-on 'l'analogie de la foi' ?",
+                    options: ["La ressemblance historique des textes", "La cohésion des vérités de la foi entre elles et dans le projet total de la Révélation", "L'étude comparative des religions", "La traduction littérale des mots"],
+                    correctIndex: 1,
+                    explication: "Par 'analogie de la foi', le Concile Vatican II entend la cohésion des vérités de la foi entre elles et dans le projet total de la Révélation."
+                },
+                {
+                    question: "Quel est le 'sens anagogique' dans l'interprétation spirituelle de la Bible ?",
+                    options: ["Le sens qui décrit l'Histoire", "Le sens qui nous donne des règles de morale", "Le sens qui voit les réalités nous conduisant vers notre Patrie céleste (éternité)", "Le sens qui réfute les hérésies"],
                     correctIndex: 2,
-                    explication: "Saint Paul (Paul de Tarse) est l'auteur de 13 des 21 épîtres du Nouveau Testament."
+                    explication: "Le sens anagogique permet de voir les événements dans leur signification éternelle, nous conduisant vers notre Patrie, comme l'Église signe de la Jérusalem céleste."
+                },
+                {
+                    question: "Que signifie la lecture typologique de l'Ancien Testament par les chrétiens ?",
+                    options: ["L'étude de la typographie des manuscrits", "Discerner dans l'Ancienne Alliance des préfigurations accomplies par le Christ", "Rejeter l'Ancien Testament comme caduc", "Classer les livres par ordre chronologique"],
+                    correctIndex: 1,
+                    explication: "La typologie discerne dans les œuvres de Dieu dans l'Ancienne Alliance des préfigurations de ce que Dieu a accompli en son Fils incarné."
+                },
+                {
+                    question: "Qui est formellement considéré comme l'Auteur de la Sainte Écriture selon l'Église ?",
+                    options: ["Les prophètes uniquement", "Dieu, qui a inspiré les auteurs humains agissant en vrais auteurs", "Les conciles œcuméniques", "Saint Pierre et Saint Paul"],
+                    correctIndex: 1,
+                    explication: "Dieu est l'Auteur de l'Écriture Sainte. Il a inspiré les auteurs humains en agissant en eux et par eux pour consigner la vérité salutaire."
+                },
+                {
+                    question: "Pourquoi affirme-t-on que la foi chrétienne n'est PAS une 'religion du Livre' ?",
+                    options: ["Parce que la Bible a été perdue", "Parce que le christianisme est la religion du Verbe incarné et vivant, non d'un verbe écrit et muet", "Parce que la lecture est facultative", "Parce que les apôtres n'ont rien écrit"],
+                    correctIndex: 1,
+                    explication: "Saint Bernard explique que le christianisme est la religion de la 'Parole' de Dieu, non d'un verbe écrit et muet, mais du Verbe incarné et vivant."
+                },
+                {
+                    question: "Quelles sont les trois étapes de la formation des Évangiles selon le Concile Vatican II ?",
+                    options: ["Révélation divine, traduction, impression", "La vie de Jésus, la tradition orale des apôtres, et les Évangiles écrits", "Mythe, légende, dogme", "L'Ancien Testament, les Psaumes, les Épîtres"],
+                    correctIndex: 1,
+                    explication: "L'Église distingue : la vie et l'enseignement de Jésus, la tradition orale transmise par les apôtres après l'Ascension, et enfin les Évangiles écrits."
+                },
+                {
+                    question: "À qui a été confiée, en exclusivité, la charge d'interpréter de façon authentique la Parole de Dieu ?",
+                    options: ["À tout croyant de manière individuelle", "Aux théologiens universitaires", "Au seul Magistère vivant de l'Église (Pape et évêques)", "Aux prophètes contemporains"],
+                    correctIndex: 2,
+                    explication: "La charge d'interpréter authentiquement la Parole a été confiée au seul Magistère de l'Église, dont l'autorité s'exerce au nom de Jésus-Christ."
+                },
+                {
+                    question: "Que désigne l'expression 'Tradition apostolique' distincte de l'Écriture Sainte ?",
+                    options: ["Les coutumes vestimentaires de l'époque", "La transmission de l'Évangile par la prédication orale, les exemples et institutions des apôtres", "Un livre caché du Nouveau Testament", "Les rituels exclusivement païens"],
+                    correctIndex: 1,
+                    explication: "La transmission vivante, accomplie par la prédication, les exemples et les institutions des apôtres sous l'Esprit Saint, est appelée la Tradition."
+                },
+                {
+                    question: "Comment Saint Augustin résume-t-il le lien intime entre l'Ancien et le Nouveau Testament ?",
+                    options: ["Le Nouveau annule les erreurs de l'Ancien", "Le Nouveau se cache dans l'Ancien et l'Ancien se dévoile dans le Nouveau", "Ils n'ont aucun lien doctrinal", "L'Ancien est pour les juifs, le Nouveau pour les gentils"],
+                    correctIndex: 1,
+                    explication: "Selon un vieil adage de Saint Augustin, le Nouveau Testament est caché dans l'Ancien, alors que l'Ancien est dévoilé dans le Nouveau."
+                },
+                {
+                    question: "D'où l'Église tire-t-elle sa certitude sur tous les points de la Révélation ?",
+                    options: ["De la seule Écriture Sainte (Sola Scriptura)", "À la fois de la Sainte Écriture et de la Sainte Tradition", "Des révélations privées récentes", "Des découvertes scientifiques"],
+                    correctIndex: 1,
+                    explication: "L'Église ne tire pas de la seule Écriture sa certitude sur tous les points de la Révélation ; l'Écriture et la Tradition doivent être reçues avec égal respect."
+                },
+                {
+                    question: "Quel est l'objet central vers lequel convergent toutes les Écritures Saintes ?",
+                    options: ["La construction du Temple de Jérusalem", "L'exode du peuple hébreu", "Le Christ Jésus, Verbe unique de Dieu", "L'institution de la Papauté"],
+                    correctIndex: 2,
+                    explication: "Toute l'Écriture n'est qu'un seul livre et ce livre, c'est le Christ. Les quatre Évangiles tiennent une place centrale puisque le Christ en est le centre."
                 }
             ],
             pratique: [
                 {
-                    question: "Quel est le temps de préparation avant Pâques ?",
-                    options: ["L'Avent", "Le Carême", "Le Temps Ordinaire", "L'Épiphanie"],
+                    question: "Comment la foi en un Dieu Unique doit-elle influencer notre usage des biens terrestres créés ?",
+                    options: ["Nous devons les rejeter car la matière est mauvaise", "Nous devons en user s'ils nous rapprochent de Lui, et nous en détacher s'ils nous en détournent", "Nous pouvons les exploiter sans aucune restriction", "Nous devons les accumuler comme preuve de bénédiction"],
                     correctIndex: 1,
-                    explication: "Le Carême est une période de 40 jours de jeûne, de prière et de partage avant Pâques."
+                    explication: "La foi en Dieu l'Unique nous amène à user des choses créées dans la mesure où cela nous rapproche de Lui et à nous en détacher sinon."
                 },
                 {
-                    question: "Quelle prière commence par 'Je vous salue...' ?",
-                    options: ["Le Notre Père", "Le Credo", "Le Magnificat", "Le Je vous salue Marie (Ave Maria)"],
-                    correctIndex: 3,
-                    explication: "C'est la prière adressée à la Vierge Marie, reprenant les paroles de l'ange Gabriel."
+                    question: "Quelle attitude Jésus exige-t-il face aux inquiétudes matérielles de la vie quotidienne ?",
+                    options: ["Un abandon filial à la Providence en cherchant d'abord le Royaume de Dieu", "Travailler jour et nuit pour accumuler des richesses", "Attendre des miracles permanents sans rien faire", "Ignorer totalement les besoins du corps"],
+                    correctIndex: 0,
+                    explication: "Jésus demande un abandon filial à la providence du Père : 'Ne vous inquiétez donc pas... Cherchez d'abord son Royaume et sa justice'."
+                },
+                {
+                    question: "Quelle est la limite morale fixée à l'homme dans sa vocation de 'soumettre la terre' ?",
+                    options: ["Il peut dominer la nature de façon arbitraire et destructrice", "Il doit participer à la Providence divine en respectant les créatures", "Il ne doit toucher à aucune ressource naturelle", "La nature étant mauvaise, il doit la purifier par le feu"],
+                    correctIndex: 1,
+                    explication: "Cette souveraineté ne doit pas être une domination arbitraire ; l'homme est appelé à participer à la Providence divine envers les autres créatures avec respect."
+                },
+                {
+                    question: "Quelle condition absolue lie Jésus à l'entrée dans son Royaume, en s'identifiant aux plus petits ?",
+                    options: ["La récitation parfaite des Psaumes", "L'amour actif et miséricordieux envers les pauvres", "La possession de connaissances théologiques", "Le paiement de l'impôt du Temple"],
+                    correctIndex: 1,
+                    explication: "Jésus s'identifie aux pauvres de toutes sortes et fait de l'amour actif envers eux la condition de l'entrée dans son Royaume au Jugement."
+                },
+                {
+                    question: "Quel enseignement principal l'Église tire-t-elle de la vie cachée de Jésus à Nazareth ?",
+                    options: ["L'importance de la rébellion politique", "L'exemple de la sainteté dans le silence, la vie familiale et le travail manuel quotidien", "Le mépris des activités profanes", "La nécessité de fuir la société dans le désert"],
+                    correctIndex: 1,
+                    explication: "Nazareth est l'école du silence, de la beauté de la vie familiale, et montre la loi sévère et rédemptrice du labeur humain quotidien."
+                },
+                {
+                    question: "Selon le Catéchisme, sur quoi repose le fondement de la morale vis-à-vis du monde matériel ?",
+                    options: ["Respecter les lois inscrites dans la création et la bonté propre de chaque créature", "Suivre les modes philosophiques du moment", "Exploiter la nature pour le seul profit économique", "Inventer ses propres lois subjectives"],
+                    correctIndex: 0,
+                    explication: "Respecter les lois inscrites dans la création et la bonté propre de chaque créature est un principe de sagesse et un fondement de la morale."
+                },
+                {
+                    question: "Quelle prière orientale, mentionnée dans le Catéchisme, centre la vie spirituelle sur l'invocation du Nom divin ?",
+                    options: ["Le Magnificat", "Le Te Deum", "La Prière à Jésus ('Seigneur prend pitié de moi pécheur')", "Le Salve Regina"],
+                    correctIndex: 2,
+                    explication: "La prière du cœur orientale appelée 'prière à Jésus' dit : 'Jésus-Christ, Fils de Dieu, Seigneur prend pitié de moi pécheur'."
+                },
+                {
+                    question: "Que signifie le cri de prière 'Maran atha' utilisé par les premiers chrétiens ?",
+                    options: ["Seigneur, pardonne-nous", "Viens, Seigneur !", "Gloire à Dieu au plus haut des cieux", "L'Esprit souffle où il veut"],
+                    correctIndex: 1,
+                    explication: "La prière est marquée par le cri plein d'espérance 'Maran atha' (ou 'Marana tha') qui signifie 'Viens, Seigneur !' dans l'attente de son retour."
+                },
+                {
+                    question: "Comment les hommes sont-ils appelés à devenir consciemment les 'collaborateurs de Dieu' ?",
+                    options: ["Uniquement par la réception passive des sacrements", "Par leurs actions libres, leurs prières, et l'offrande de leurs souffrances", "En fuyant toute responsabilité terrestre", "En refusant d'utiliser leur intelligence naturelle"],
+                    correctIndex: 1,
+                    explication: "Dieu accorde de participer à sa providence : les hommes peuvent entrer dans le plan divin par leurs actions, leurs prières, mais aussi leurs souffrances."
+                },
+                {
+                    question: "Quelle interprétation Jésus donne-t-il au repos du Sabbat lorsqu'il guérit des malades ce jour-là ?",
+                    options: ["Il abolit définitivement la loi du Sabbat", "Le repos du sabbat n'est pas troublé par le service de Dieu ou du prochain", "Le Sabbat ne s'applique qu'aux prêtres", "Il prouve que la Loi de Moïse était mauvaise"],
+                    correctIndex: 1,
+                    explication: "Jésus rappelle, même avec des arguments rabbiniques, que le repos du sabbat n'est pas troublé par le service de Dieu ou du prochain accompli par ses guérisons."
+                },
+                {
+                    question: "Pourquoi l'Église célèbre-t-elle le 'huitième jour' (dimanche) comme le sommet de la vie chrétienne ?",
+                    options: ["Parce que la semaine romaine comptait huit jours", "Le huitième jour marque le début de la nouvelle création par la Résurrection du Christ", "Pour se différencier purement des autres religions", "Parce que Dieu a travaillé huit jours pour créer le monde"],
+                    correctIndex: 1,
+                    explication: "Le septième jour achève la première création. Le huitième jour commence la nouvelle création par la Résurrection du Christ, sommet de la Rédemption."
+                },
+                {
+                    question: "Quelle attitude de la Vierge Marie réalise de manière parfaite l''obéissance de la foi' en pratique ?",
+                    options: ["Son retrait dans un monastère", "Son consentement total à Dieu : 'Je suis la servante du Seigneur, qu'il m'advienne selon ta parole'", "Ses écrits théologiques", "Son autorité politique sur les Apôtres"],
+                    correctIndex: 1,
+                    explication: "Marie réalise la foi parfaite en accueillant la promesse avec certitude et en donnant son assentiment total comme servante du Seigneur."
                 }
             ],
             apologetique: [
                 {
-                    question: "L'Église s'oppose-t-elle à la théorie de l'évolution (Big Bang) ?",
-                    options: ["Oui, totalement", "Non, si Dieu en est l'origine", "Elle n'a pas d'avis", "Seulement pour les animaux"],
-                    correctIndex: 1,
-                    explication: "L'Église catholique accepte la théorie de l'évolution et le Big Bang, y voyant le moyen par lequel Dieu a créé l'univers."
+                    question: "Comment l'Église conçoit-elle la relation entre la foi chrétienne et la recherche scientifique ?",
+                    options: ["Elles sont fondamentalement en conflit", "Elles n'ont jamais eu le même Dieu pour origine", "Il ne peut jamais y avoir de vrai désaccord car elles trouvent leur origine dans le même Dieu", "La foi doit toujours s'incliner devant toute théorie scientifique"],
+                    correctIndex: 2,
+                    explication: "Puisque le même Dieu révèle les mystères et donne la lumière de la raison, la recherche scientifique méthodique ne s'opposera jamais réellement à la foi."
                 },
                 {
-                    question: "Qu'est-ce que l'Eucharistie pour les catholiques ?",
-                    options: ["Un simple symbole", "Un souvenir historique", "La présence réelle du Christ", "Une tradition païenne"],
+                    question: "Comment l'Apologétique catholique justifie-t-elle le fait que Dieu permette le mal moral ?",
+                    options: ["Dieu n'est pas assez puissant pour l'empêcher", "Le mal est une création de Dieu pour tester l'homme", "Dieu respecte la liberté de sa créature et est assez puissant pour tirer le bien du mal", "Dieu a abandonné le monde après sa création"],
                     correctIndex: 2,
-                    explication: "L'Église enseigne la transsubstantiation : le pain et le vin deviennent réellement le corps et le sang du Christ."
+                    explication: "Dieu ne laisserait jamais le mal exister s'il n'était assez puissant et bon pour faire sortir le bien du mal lui-même, tout en respectant la liberté humaine."
+                },
+                {
+                    question: "Que désigne l'Église par 'preuves de l'existence de Dieu' accessibles à la raison ?",
+                    options: ["Des preuves mathématiques irréfutables", "Des arguments convergents et convaincants à partir du monde matériel et de la personne humaine", "Une foi aveugle sans logique", "Des apparitions angéliques publiques"],
+                    correctIndex: 1,
+                    explication: "Ces 'preuves' ne sont pas au sens des sciences naturelles, mais des arguments convergents (ordre du monde, conscience) qui permettent d'atteindre la certitude."
+                },
+                {
+                    question: "Quel argument textuel s'oppose à l'idée que la Résurrection serait le produit de la 'crédulité' des apôtres ?",
+                    options: ["Les apôtres s'y attendaient avec joie", "Les Évangiles montrent les disciples abattus, effrayés et doutant initialement de la Résurrection", "Les Romains ont confirmé le vol du corps", "Les prophètes l'avaient caché"],
+                    correctIndex: 1,
+                    explication: "Loin d'une exaltation mystique, les disciples étaient effrayés, ne croyaient pas les saintes femmes au début et Jésus a dû reprocher leur incrédulité."
+                },
+                {
+                    question: "Selon Vatican II et le Catéchisme, à qui incombe la véritable responsabilité de la mort de Jésus ?",
+                    options: ["Aux seuls Juifs de Jérusalem", "Uniquement à Ponce Pilate", "À tous les pécheurs, les chrétiens portant une responsabilité particulièrement grave", "À Judas Iscariote exclusivement"],
+                    correctIndex: 2,
+                    explication: "L'Église n'a jamais oublié que les pécheurs eux-mêmes furent les auteurs de la passion ; imputer la mort du Christ à tous les Juifs est condamné par Vatican II."
+                },
+                {
+                    question: "Parmi les facultés humaines, qu'est-ce qui atteste l'existence d'une âme spirituelle selon le texte ?",
+                    options: ["La capacité de courir et de respirer", "Son ouverture à la vérité, son sens du bien moral, sa liberté et sa conscience", "La composition chimique du cerveau", "Le besoin de sommeil"],
+                    correctIndex: 1,
+                    explication: "Avec son sens du bien moral, sa liberté et la voix de sa conscience, l'homme perçoit des signes de son âme spirituelle, irréductible à la seule matière."
+                },
+                {
+                    question: "Comment le Catéchisme explique-t-il la présence de maux physiques et de destructions dans la nature ?",
+                    options: ["C'est une erreur de conception de Dieu", "C'est l'œuvre exclusive du diable", "Le monde a été créé 'en état de voie' vers sa perfection, impliquant destructions et devenir", "C'est une illusion d'optique"],
+                    correctIndex: 2,
+                    explication: "Dieu a librement créé un monde en devenir ('en état de voie'). Ce devenir comporte l'apparition de certains êtres et la disparition d'autres, d'où le mal physique."
+                },
+                {
+                    question: "Pourquoi Dieu a-t-il laissé Adam pécher, selon la réponse de Saint Thomas d'Aquin et de la Liturgie ?",
+                    options: ["Parce que la grâce du Christ nous a donné des biens meilleurs que ceux que le péché nous avait ôtés ('O heureuse faute')", "Parce qu'il ne savait pas ce qu'allait faire le serpent", "Pour pouvoir détruire l'humanité plus tard", "Par indifférence"],
+                    correctIndex: 0,
+                    explication: "Rien ne s'oppose à ce que la nature humaine ait été destinée à une fin plus haute après le péché ; la faute a mérité un tel et un si grand Rédempteur."
+                },
+                {
+                    question: "Quel rôle jouent les miracles du Christ dans l'acte de foi catholique ?",
+                    options: ["Ils remplacent la nécessité de croire", "Ils sont des 'motifs de crédibilité' montrant que l'assentiment de la foi n'est pas aveugle", "Ils sont des illusions pour tromper les païens", "Ils ne sont que des allégories morales"],
+                    correctIndex: 1,
+                    explication: "Les miracles du Christ sont des signes certains de la Révélation, des 'motifs de crédibilité' montrant que la foi n'est nullement un mouvement aveugle de l'esprit."
+                },
+                {
+                    question: "Contre les philosophies dualistes et panthéistes, quelle vérité concernant la Création est défendue ?",
+                    options: ["Le monde est une émanation nécessaire de Dieu", "Le Bien et le Mal luttent éternellement à armes égales", "Dieu a créé le monde librement et 'de rien' (ex nihilo)", "La matière a toujours existé"],
+                    correctIndex: 2,
+                    explication: "La foi affirme que Dieu n'a pas besoin de matière préexistante ni n'émane de lui-même le monde, mais qu'il crée librement 'de rien'."
+                },
+                {
+                    question: "En Apologétique, quelle est la véritable valeur du 'tombeau vide' au matin de Pâques ?",
+                    options: ["C'est la preuve mathématique absolue de la résurrection", "C'est un signe essentiel qui fut le premier pas vers la reconnaissance du fait par les disciples", "C'est une fable inventée au 4ème siècle", "Il prouve que le corps a été volé"],
+                    correctIndex: 1,
+                    explication: "Le sépulcre vide n'est pas en soi une preuve directe, mais il a constitué un signe essentiel et le premier pas vers la foi en la Résurrection pour les apôtres."
+                },
+                {
+                    question: "Que dénonce l'Église à travers la condamnation du 'millénarisme' politique ?",
+                    options: ["L'utilisation du calendrier grégorien", "La falsification antichristique qui prétend accomplir définitivement le Royaume de Dieu dans l'histoire terrestre", "L'étude de l'an 1000", "Le rassemblement dominical"],
+                    correctIndex: 1,
+                    explication: "L'imposture antichristique est un messianisme sécularisé prétendant réaliser sur terre l'espérance qui ne peut s'achever qu'au-delà, par le Jugement divin."
                 }
             ]
         };
@@ -92,16 +332,17 @@
             { id: 'mix', label: 'Mix (Aléatoire)', color: 'bg-gray-800' }
         ];
 
-        // 2. COMPOSANT PRINCIPAL (APPLICATION)
         // Fonction pour mélanger un tableau aléatoirement (Fisher-Yates)
-            const shuffleArray = (array) => {
-                const newArray = [...array];
-                for (let i = newArray.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-                }
-                return newArray;
-            };
+        const shuffleArray = (array) => {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        };
+
+        // 2. COMPOSANT PRINCIPAL (APPLICATION)
         function App() {
             const [gameState, setGameState] = React.useState('home'); // home, theme, quiz, score
             const [questions, setQuestions] = React.useState([]);
@@ -109,29 +350,27 @@
             const [score, setScore] = React.useState(0);
             const [selectedAnswer, setSelectedAnswer] = React.useState(null);
 
-           const startQuiz = (themeId) => {
-    let selectedQuestions = [];
-    
-    if (themeId === 'mix') {
-        // Regroupe toutes les questions et les mélange
-        const allQuestions = [
-            ...quizData.doctrine,
-            ...quizData.ecritures,
-            ...quizData.pratique,
-            ...quizData.apologetique
-        ];
-        selectedQuestions = shuffleArray(allQuestions).slice(0, 5); // Garde 5 questions au hasard
-    } else {
-        // Mélange uniquement les questions du thème choisi
-        selectedQuestions = shuffleArray(quizData[themeId]);
-    }
-    
-    setQuestions(selectedQuestions);
-    setCurrentQIndex(0);
-    setScore(0);
-    setSelectedAnswer(null);
-    setGameState('quiz');
-};
+            const startQuiz = (themeId) => {
+                let selectedQuestions = [];
+                
+                if (themeId === 'mix') {
+                    const allQuestions = [
+                        ...quizData.doctrine,
+                        ...quizData.ecritures,
+                        ...quizData.pratique,
+                        ...quizData.apologetique
+                    ];
+                    selectedQuestions = shuffleArray(allQuestions).slice(0, 10); 
+                } else {
+                    selectedQuestions = shuffleArray(quizData[themeId]).slice(0, 10);
+                }
+                
+                setQuestions(selectedQuestions);
+                setCurrentQIndex(0);
+                setScore(0);
+                setSelectedAnswer(null);
+                setGameState('quiz');
+            };
 
             const handleAnswer = (index) => {
                 if (selectedAnswer !== null) return; 
@@ -150,10 +389,9 @@
                 }
             };
 
-            // Écran d'accueil
             if (gameState === 'home') {
                 return (
-                    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+                    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4">
                         <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md text-center">
                             <div className="flex flex-col items-center justify-center space-y-4 mb-6">
                                 <img src="logo-upsc.png" alt="Logo Unité Pastorale Sainte-Croix" className="h-20 object-contain" />
@@ -172,10 +410,9 @@
                 );
             }
 
-            // Écran Sélection du thème
             if (gameState === 'theme') {
                 return (
-                    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+                    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4">
                         <div className="w-full max-w-md">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Choisissez un thème</h2>
                             <div className="grid gap-4">
@@ -194,24 +431,25 @@
                 );
             }
 
-            // Écran de Quiz
             if (gameState === 'quiz') {
                 const currentQuestion = questions[currentQIndex];
                 const isAnswered = selectedAnswer !== null;
 
                 return (
-                    <div className="min-h-screen flex flex-col p-4 w-full max-w-md mx-auto">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6 mt-4">
-                            <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${((currentQIndex + 1) / questions.length) * 100}%` }}></div>
+                    <div className="min-h-[100dvh] flex flex-col p-4 w-full max-w-md mx-auto relative">
+                        {/* Barre de progression avec marges réduites */}
+                        <div className="w-full bg-gray-200 rounded-full h-2 mb-4 mt-2">
+                            <div className="bg-blue-600 h-2 rounded-full transition-all duration-300" style={{ width: `${((currentQIndex + 1) / questions.length) * 100}%` }}></div>
                         </div>
                         
-                        <div className="flex-grow">
-                            <span className="text-sm font-semibold text-gray-500 uppercase">Question {currentQIndex + 1} / {questions.length}</span>
-                            <h2 className="text-2xl font-bold text-gray-900 mt-2 mb-8">{currentQuestion.question}</h2>
+                        {/* Zone de contenu : pb-24 empêche le texte d'être caché par le bouton fixe */}
+                        <div className="flex-grow pb-24">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Question {currentQIndex + 1} / {questions.length}</span>
+                            <h2 className="text-xl font-bold text-gray-800 mt-1 mb-5 leading-tight">{currentQuestion.question}</h2>
 
-                            <div className="grid gap-3">
+                            <div className="grid gap-2.5">
                                 {currentQuestion.options.map((option, index) => {
-                                    let buttonClass = "bg-white text-gray-800 border-2 border-gray-200 hover:border-blue-500";
+                                    let buttonClass = "bg-white text-gray-800 border-2 border-gray-200";
                                     
                                     if (isAnswered) {
                                         if (index === currentQuestion.correctIndex) {
@@ -221,6 +459,8 @@
                                         } else {
                                             buttonClass = "bg-gray-100 text-gray-400 border-gray-100 opacity-50";
                                         }
+                                    } else {
+                                        buttonClass += " hover:border-blue-400 active:bg-gray-50";
                                     }
 
                                     return (
@@ -228,7 +468,7 @@
                                             key={index}
                                             disabled={isAnswered}
                                             onClick={() => handleAnswer(index)}
-                                            className={`p-4 rounded-xl text-left font-semibold text-lg transition-colors ${buttonClass}`}
+                                            className={`p-3 rounded-xl text-left font-semibold text-[15px] transition-colors ${buttonClass}`}
                                         >
                                             {option}
                                         </button>
@@ -237,25 +477,29 @@
                             </div>
 
                             {isAnswered && (
-                                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl slide-up">
-                                    <p className="text-blue-900 text-sm"><strong>Explication :</strong> {currentQuestion.explication}</p>
+                                <div className="mt-4 p-3.5 bg-blue-50 border border-blue-200 rounded-xl slide-up">
+                                    <p className="text-blue-900 text-sm leading-snug"><strong>Explication :</strong> {currentQuestion.explication}</p>
                                 </div>
                             )}
                         </div>
 
+                        {/* Bandeau fixe en bas d'écran contenant le bouton de navigation */}
                         {isAnswered && (
-                            <button
-                                onClick={nextQuestion}
-                                className="w-full bg-gray-900 text-white font-bold py-4 rounded-xl text-lg mt-6 shadow-lg active:scale-95"
-                            >
-                                {currentQIndex + 1 === questions.length ? "Voir mon score" : "Question suivante"}
-                            </button>
+                            <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)] z-10 flex justify-center">
+                                <div className="w-full max-w-md">
+                                    <button
+                                        onClick={nextQuestion}
+                                        className="w-full bg-gray-900 text-white font-bold py-3.5 rounded-xl text-lg shadow-md active:scale-95 transition-transform"
+                                    >
+                                        {currentQIndex + 1 === questions.length ? "Voir mon score" : "Question suivante"}
+                                    </button>
+                                </div>
+                            </div>
                         )}
                     </div>
                 );
             }
 
-            // Écran de Score
             if (gameState === 'score') {
                 const percentage = Math.round((score / questions.length) * 100);
                 let message = "Bien joué !";
@@ -263,7 +507,7 @@
                 else if (percentage < 50) message = "Encore quelques efforts !";
 
                 return (
-                    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+                    <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4">
                         <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
                             <h2 className="text-3xl font-bold text-gray-800 mb-2">Bilan</h2>
                             <p className="text-gray-500 mb-6">{message}</p>
